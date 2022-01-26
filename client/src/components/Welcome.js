@@ -1,4 +1,7 @@
 /* eslint-disable semi */
+
+/* this is my commit change - Fran Oliveira */
+
 import React from 'react';
 
 const Welcome = () =>
