@@ -1,4 +1,6 @@
 /* eslint-disable semi */
+
+/* Alec's minor code change */
 import React from 'react';
 
 const Welcome = () =>
