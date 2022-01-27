@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+/* This is Josviel's minor code change*/
 const Item = new Schema(
     {
         name: {
