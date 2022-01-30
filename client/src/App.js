@@ -13,48 +13,37 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/App.css';
 
 // Static/Stateless
-import {
-    NavBar,
-    PageLayout,
-    Welcome
-} from './components';
+import { NavBar, PageLayout, Welcome } from './components';
 
 // Pages
-import {
-    ItemInsert,
-    Items,
-    ItemUpdate
-} from './pages';
+import { ItemInsert, Items, ItemUpdate } from './pages';
 
 class App extends Component {
-    render() {
-
-        // TODO: maybe only need one route for Items?
-        const publicViews = (
-            <Switch>
-                <Route exact path={routes.HOME} component={Welcome} />
-                <Route exact path={routes.ITEMS} component={Items} />
+  render() {
+    // TODO: maybe only need one route for Items?
+    const publicViews = (
+      <Switch>
+        <Route exact path={routes.HOME} component={Welcome} />
+        {/* <Route exact path={routes.ITEMS} component={Items} />
                 <Route exact path={`${routes.ITEMS}/items-plain`} component={Items} />
                 <Route exact path={`${routes.ITEMS}/react-table-v6`} component={Items} />
                 <Route exact path={routes.ITEM_INSERT} component={ItemInsert} />
-                <Route exact path={routes.ITEM_UPDATE} component={ItemUpdate} />
-            </Switch>
-        );
+                <Route exact path={routes.ITEM_UPDATE} component={ItemUpdate} /> */}
+      </Switch>
+    );
 
-        return (
-            <Router>
-                <CssBaseline />
-                <NavBar />
-                <div className="app--main">
-                    <PageLayout />
-                    <div className="view-container">
-                        {publicViews}
-                    </div>
-                </div>
-            </Router>
-        );
-    };
-};
+    return (
+      <Router>
+        <CssBaseline />
+        <NavBar />
+        <div className="app--main">
+          <PageLayout />
+          {/* <div className="view-container">{publicViews}</div> */}
+        </div>
+      </Router>
+    );
+  }
+}
 
 const mapStateToProps = state => ({ ...state });
 
