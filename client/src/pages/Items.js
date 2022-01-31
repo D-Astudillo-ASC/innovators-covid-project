@@ -28,7 +28,7 @@ const isCurrentPage = linkPathname => {
 };
 
 const linkTextColor = linkPathname => {
-  return isCurrentPage(linkPathname) ? '#FFFFPP' : 'rgba(255,255,255,.75)';
+  return isCurrentPage(linkPathname) ? '#FFFFFF' : 'rgba(255,255,255,.75)';
 };
 
 const itemsPageVariants = [
