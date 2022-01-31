@@ -1,247 +1,222 @@
-// import React, { Component } from 'react';
-// import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
-// import { insertSingleItem } from '../actions';
-// import { shared } from '../constants';
+import React, { Component } from 'react';
+import { shared } from '../constants';
+import api from '../api';
 
-// import styled from 'styled-components';
+import styled from 'styled-components';
 
-// const Title = styled.h1.attrs({
-//     className: 'h1',
-// })``;
+const Title = styled.h1.attrs({
+  className: 'h1',
+})``;
 
-// const Wrapper = styled.div.attrs({
-//     className: 'form-group',
-// })`
-//     margin-top: 0 30px;
-// `;
+const Wrapper = styled.div.attrs({
+  className: 'form-group',
+})`
+  margin-top: 0 30px;
+`;
 
-// const Label = styled.label`
-//     margin: 5px;
-//     max-width: 30%;
+const Label = styled.label`
+  margin: 5px;
+  max-width: 30%;
+  @media screen and (max-width: 420px) {
+    height: auto;
+    max-width: 75%;
+  }
+`;
 
-//     @media screen and (max-width: 420px) {
-//         height: auto;
-//         max-width: 75%;
-//     }
-// `;
+const InputText = styled.input.attrs({
+  className: 'form-control',
+})`
+  margin: 5px auto;
+  max-width: 30%;
+  text-align: center;
+  @media screen and (max-width: 420px) {
+    height: auto;
+    max-width: 75%;
+  }
+`;
 
-// const InputText = styled.input.attrs({
-//     className: 'form-control',
-// })`
-//     margin: 5px auto;
-//     max-width: 30%;
-//     text-align: center;
+const Fieldset = styled.fieldset.attrs({
+  className: 'form-control',
+})`
+  background-color: transparent;
+  border-color: transparent;
+  margin: 1em auto 0.5em;
+  max-width: 50%;
+  min-height: 6em;
+  @media screen and (max-width: 420px) {
+    height: auto;
+    max-width: 75%;
+  }
+`;
 
-//     @media screen and (max-width: 420px) {
-//         height: auto;
-//         max-width: 75%;
-//     }
-// `;
+const DayInput = styled.input.attrs({
+  className: '',
+})`
+  margin: 5px 5px 5px auto;
+  text-align: center;
+`;
 
-// const Fieldset = styled.fieldset.attrs({
-//     className: 'form-control',
-// })`
-//     background-color: transparent;
-//     border-color: transparent;
-//     margin: 1em auto 0.5em;
-//     max-width: 50%;
-//     min-height: 6em;
+const Button = styled.button.attrs({
+  className: 'btn btn-primary',
+})`
+  margin: 15px 15px 15px 5px;
+`;
 
-//     @media screen and (max-width: 420px) {
-//         height: auto;
-//         max-width: 75%;
-//     }
-// `;
+const CancelButton = styled.a.attrs({
+  className: 'btn btn-danger',
+})`
+  margin: 15px 15px 15px 5px;
+`;
 
-// const DayInput = styled.input.attrs({
-//     className: '',
-// })`
-//     margin: 5px 5px 5px auto;
-//     text-align: center;
-// `;
+class ItemInsert extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      daysOfWeek: {},
+      timeframeNote: '',
+      priority: 0,
+      content: '',
+    };
+  }
 
-// const Button = styled.button.attrs({
-//     className: 'btn btn-primary',
-// })`
-//   margin: 15px 15px 15px 5px;
-// `;
+  handleChangeInputName = async event => {
+    const name = event.target.value;
+    this.setState({ name });
+  };
 
-// const CancelButton = styled.a.attrs({
-//     className: 'btn btn-danger',
-// })`
-//   margin: 15px 15px 15px 5px;
-// `;
+  handleChangeDays = async event => {
+    const { checked, value } = event.target;
+    const { daysOfWeek } = this.state;
+    const { DAYS_OF_WEEK } = shared;
 
-// class ItemInsert extends Component {
-//     constructor(props) {
-//         /**
-//          * Currently deprecated and now known as the "legacy context":
-//          * - https://reactjs.org/docs/legacy-context.html
-//          *
-//          * TODO: refactor to use new Context API:
-//          * - https://reactjs.org/docs/context.html
-//          */
-//         super(props);
-//         this.state = {
-//             name: '',
-//             daysOfWeek: {},
-//             timeframeNote: '',
-//             priority: 0,
-//             content: '',
-//         };
-//     }
+    if (checked && !daysOfWeek[value]) {
+      daysOfWeek[value] = DAYS_OF_WEEK[value];
+    } else if (!checked && daysOfWeek[value]) {
+      delete daysOfWeek[value];
+    }
+    this.setState({ daysOfWeek });
+  };
 
-//     handleChangeInputName = async event => {
-//         const name = event.target.value;
-//         this.setState({ name });
-//     }
+  handleChangeInputTimeframe = async event => {
+    const timeframeNote = event.target.value;
+    this.setState({ timeframeNote });
+  };
 
-//     handleChangeDays = async event => {
-//         const { checked, value } = event.target;
-//         const { daysOfWeek } = this.state;
-//         const { DAYS_OF_WEEK } = shared;
+  handleChangeInputPriority = async event => {
+    const priority = event.target.validity.valid ? event.target.value : this.state.priority;
 
-//         if (checked && !daysOfWeek[value]) {
-//             daysOfWeek[value] = DAYS_OF_WEEK[value];
-//         } else if (!checked && daysOfWeek[value]) {
-//             delete daysOfWeek[value];
-//         }
-//         this.setState({ daysOfWeek });
-//     }
+    this.setState({ priority });
+  };
 
-//     handleChangeInputTimeframe = async event => {
-//         const timeframeNote = event.target.value;
-//         this.setState({ timeframeNote });
-//     }
+  handleChangeInputContent = async event => {
+    const content = event.target.value;
+    this.setState({ content });
+  };
 
-//     handleChangeInputPriority = async event => {
-//         const priority = event.target.validity.valid
-//             ? event.target.value
-//             : this.state.priority;
+  insertSingleItem = item => {
+    return api
+      .insertItem(item)
+      .then(resp => {
+        console.log('insertItem: resp');
+        console.log(resp);
+        if ((resp.data || {}).success) {
+          const newItem = JSON.parse(resp.config.data);
+          console.log('insertItem: newItem', newItem);
+        }
+        return resp;
+      })
+      .catch(err => {
+        console.error(`ERROR in 'insertSingleItem': ${err}`);
+        console.error(err);
+        return err;
+      });
+  };
 
-//         this.setState({ priority });
-//     }
+  handleInsertItem = event => {
+    event.preventDefault();
 
-//     handleChangeInputContent = async event => {
-//         const content = event.target.value;
-//         this.setState({ content });
-//     }
+    const { name, daysOfWeek, timeframeNote, priority, content } = this.state;
+    const item = { name, daysOfWeek, timeframeNote, priority, content };
 
-//     handleInsertItem = event => {
-//         event.preventDefault();
+    this.insertSingleItem(item)
+      .then(resp => {
+        console.log('handleInsertItem: resp');
+        console.log(resp);
+        if (typeof resp === 'object' && resp.status < 300 && resp.status >= 200) {
+          window.alert('Item inserted successfully');
+          this.setState({
+            name: '',
+            daysOfWeek: {},
+            timeframeNote: '',
+            priority: 0,
+            content: '',
+          });
+        } else {
+          throw resp;
+        }
+      })
+      .catch(err => {
+        // TODO: pass error object correctly so that things like validation errors can be displayed to user
+        window.alert(`There was an error creating the item... :(`);
+        console.log('handleInsertItem: err');
+        console.log(err);
+      });
+  };
 
-//         const {
-//             name,
-//             daysOfWeek,
-//             timeframeNote,
-//             priority,
-//             content
-//         } = this.state;
-//         const item = { name, daysOfWeek, timeframeNote, priority, content };
+  render() {
+    const { name, daysOfWeek, timeframeNote, priority, content } = this.state;
 
-//         this.props.insertSingleItem(item)
-//             .then(resp => {
-//                 console.log("handleInsertItem: resp");
-//                 console.log(resp);
-//                 if (typeof resp === "object" && (resp.status < 300 && resp.status >= 200)) {
-//                     window.alert('Item inserted successfully');
-//                     this.setState({
-//                         name: '',
-//                         daysOfWeek: {},
-//                         timeframeNote: '',
-//                         priority: 0,
-//                         content: '',
-//                     });
-//                 } else {
-//                     throw resp;
-//                 }
-//             })
-//             .catch(err => {
-//                 // TODO: pass error object correctly so that things like validation errors can be displayed to user
-//                 window.alert(`There was an error creating the item... :(`);
-//                 console.log("handleInsertItem: err");
-//                 console.log(err);
-//             })
-//     }
+    const { DAYS_OF_WEEK } = shared;
 
-//     render() {
-//         const {
-//             name,
-//             daysOfWeek,
-//             timeframeNote,
-//             priority,
-//             content
-//         } = this.state;
+    return (
+      <Wrapper>
+        <Title>Create Item</Title>
 
-//         const { DAYS_OF_WEEK } = shared;
+        <Label>Name: </Label>
+        <InputText type="text" value={name} onChange={this.handleChangeInputName} />
 
-//         return (
-//             <Wrapper>
-//                 <Title>Create Item</Title>
+        <Fieldset>
+          <legend>Day(s) of the Week: </legend>
+          {Object.keys(DAYS_OF_WEEK).map((day, i) => (
+            <React.Fragment key={day}>
+              <Label htmlFor={day}>
+                <DayInput
+                  type="checkbox"
+                  id={day}
+                  value={day}
+                  onChange={this.handleChangeDays}
+                  checked={typeof daysOfWeek[day] === 'string'}
+                />
+                {DAYS_OF_WEEK[day]}
+              </Label>
+            </React.Fragment>
+          ))}
+        </Fieldset>
 
-//                 <Label>Name: </Label>
-//                 <InputText
-//                     type="text"
-//                     value={name}
-//                     onChange={this.handleChangeInputName}
-//                 />
+        <Label>Timeframe Note: </Label>
+        <InputText type="text" value={timeframeNote} onChange={this.handleChangeInputTimeframe} />
 
-//                 <Fieldset>
-//                     <legend>Day(s) of the Week: </legend>
-//                     {Object.keys(DAYS_OF_WEEK).map((day, i) => (
-//                         <React.Fragment
-//                             key={day}
-//                         >
-//                             <Label
-//                                 htmlFor={day}
-//                             >
-//                                 <DayInput
-//                                     type="checkbox"
-//                                     id={day}
-//                                     value={day}
-//                                     onChange={this.handleChangeDays}
-//                                     checked={typeof daysOfWeek[day] === "string"}
-//                                 />
-//                                 { DAYS_OF_WEEK[day] }
-//                             </Label>
-//                         </React.Fragment>
-//                     ))}
-//                 </Fieldset>
+        <Label>Priority: </Label>
+        <InputText
+          type="number"
+          step="0.1"
+          lang="en-US"
+          min="0"
+          max="1000"
+          pattern="[0-9]+([,\.][0-9]+)?"
+          value={priority}
+          onChange={this.handleChangeInputPriority}
+        />
 
-//                 <Label>Timeframe Note: </Label>
-//                 <InputText
-//                     type="text"
-//                     value={timeframeNote}
-//                     onChange={this.handleChangeInputTimeframe}
-//                 />
+        <Label>Content: </Label>
+        <InputText type="textarea" value={content} onChange={this.handleChangeInputContent} />
 
-//                 <Label>Priority: </Label>
-//                 <InputText
-//                     type="number"
-//                     step="0.1"
-//                     lang="en-US"
-//                     min="0"
-//                     max="1000"
-//                     pattern="[0-9]+([,\.][0-9]+)?"
-//                     value={priority}
-//                     onChange={this.handleChangeInputPriority}
-//                 />
+        <Button onClick={this.handleInsertItem}>Add Item</Button>
+        <CancelButton href={'/items'}>Cancel</CancelButton>
+      </Wrapper>
+    );
+  }
+}
 
-//                 <Label>Content: </Label>
-//                 <InputText
-//                     type="textarea"
-//                     value={content}
-//                     onChange={this.handleChangeInputContent}
-//                 />
-
-//                 <Button onClick={this.handleInsertItem}>Add Item</Button>
-//                 <CancelButton href={'/items/list'}>Cancel</CancelButton>
-//             </Wrapper>
-//         );
-//     }
-// }
-
-// const mapDispatchToProps = dispatch => bindActionCreators({ insertSingleItem }, dispatch);
-
-// export default connect(null, mapDispatchToProps)(ItemInsert);
+export default ItemInsert;

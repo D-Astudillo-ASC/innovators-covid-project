@@ -24,11 +24,11 @@ class App extends Component {
     const publicViews = (
       <Switch>
         <Route exact path={routes.HOME} component={Welcome} />
-        {/* <Route exact path={routes.ITEMS} component={Items} />
-                <Route exact path={`${routes.ITEMS}/items-plain`} component={Items} />
-                <Route exact path={`${routes.ITEMS}/react-table-v6`} component={Items} />
-                <Route exact path={routes.ITEM_INSERT} component={ItemInsert} />
-                <Route exact path={routes.ITEM_UPDATE} component={ItemUpdate} /> */}
+        <Route exact path={routes.ITEMS} component={Items} />
+        <Route exact path={`${routes.ITEMS}/items-plain`} component={Items} />
+        <Route exact path={`${routes.ITEMS}/react-table-v6`} component={Items} />
+        <Route exact path={routes.ITEM_INSERT} component={ItemInsert} />
+        <Route exact path={routes.ITEM_UPDATE} component={ItemUpdate} />
       </Switch>
     );
 
@@ -38,7 +38,7 @@ class App extends Component {
         <NavBar />
         <div className="app--main">
           <PageLayout />
-          {/* <div className="view-container">{publicViews}</div> */}
+          <div className="view-container">{publicViews}</div>
         </div>
       </Router>
     );
