@@ -10,10 +10,6 @@
 // import { Button } from '@material-ui/core';
 // import styled from 'styled-components';
 
-
-
-  
-=======
 // import {
 //     ItemsList,
 //     ItemsPlain,
@@ -98,7 +94,6 @@
 //         );
 //     };
 // };
-
 
 // const mapStateToProps = state => ({ ...state });
 

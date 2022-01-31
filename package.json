@@ -1,7 +1,4 @@
 {
-
- 
-=======
   "name": "react-redux-template",
   "description": "An example app using the MERN stack, with the main branch using React and Redux.",
   "version": "0.1.0",
@@ -37,5 +34,4 @@
     "node-notifier": "^8.0.1",
     "object-path": "^0.11.5"
   }
-main
 }
