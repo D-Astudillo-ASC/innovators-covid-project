@@ -5,6 +5,14 @@
 /.pnp
 .pnp.js
 
+# ignore yarn stuff. 
+.yarn*
+client/.yarn/*
+server/.yarn/*
+yarn.lock
+client/yarn.lock
+server/yarn.lock
+
 # testing
 /coverage
 
