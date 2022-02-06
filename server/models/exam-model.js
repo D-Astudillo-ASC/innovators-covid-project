@@ -3,17 +3,33 @@ const Schema = mongoose.Schema;
 
 const Exam = new Schema(
     {
-        Exam_id: new Schema.Types.ObjectId,
-        patient_id: new Schema.Types.ObjectId,
-        image: {
-            type: Buffer,
-            required: true
+        //Exam_id: new mongoose.Mongoose.Types.ObjectId,
+        //patient_id: new mongoose.Mongoose.Types.ObjectId,
+
+        patient_id: {
+            type: String,
+            required: true,
         },
-        key_fidings: {
+
+        exam_id: {
+          type: String,
+          required: true,
+        },
+
+        image_url: {
             type: String,
             required: false
         },
-        Brixia_Scores: {
+        xray_type: {
+            type: String,
+            required: false,
+        },
+
+        key_findings: {
+            type: String,
+            required: false
+        },
+        brixia_scores: {
             type: Array,
             required: true
         },
@@ -21,4 +37,5 @@ const Exam = new Schema(
     { timestamps: true },
 );
 
-module.exports = mongoose.model('exam', Exam);
+// export module and save objects to collection exams in db MedicalData
+module.exports = mongoose.model('exam', Exam, 'exams');
