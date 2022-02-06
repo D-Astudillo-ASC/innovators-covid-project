@@ -3,16 +3,21 @@ const Schema = mongoose.Schema;
 
 const Patient = new Schema(
     {
-        patient_id: new Schema.Types.ObjectId,
-        Age: {
+        //patient_id: new mongoose.Mongoose.Types.ObjectId,
+        patient_id: {
+            type: String,
+            required: true,
+        },
+
+        age: {
             type: Number,
             required: true
         },
-        Sex: {
+        sex: {
             type: String,
             required: true
         },
-        BMI: {
+        bmi: {
             type: Number,
             required: true
         },
@@ -23,4 +28,5 @@ const Patient = new Schema(
     },
 );
 
-module.exports = mongoose.model('patient', Patient);
+// export module and save objects to collection patients in db MedicalData
+module.exports = mongoose.model('patient', Patient, 'patients');

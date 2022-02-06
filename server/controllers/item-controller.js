@@ -1,5 +1,6 @@
 /* eslint-disable no-undef, arrow-body-style */
 const Item = require('../models/item-model');
+//const Patient = require('../models/patient-model.js');
 
 getItems = async (req, res) => {
     await Item.find({}, (err, items) => {
@@ -91,6 +92,7 @@ createItem = (req, res) => {
     }
 
     const item = new Item(body);
+    //const item = new Patient(body);
 
     if (!item) {
         console.error(`[Hack.Diversity React Template] - 400 in 'createItem': 'item' is malformed.`);
