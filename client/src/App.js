@@ -16,7 +16,7 @@ import './styles/App.css';
 // import { NavBar, PageLayout, Welcome } from './components';
 import { NavBar, PageLayout } from './components';
 // Pages
-// import { ItemInsert, Items, ItemUpdate, Exams } from './pages';
+
 import {
   Exams,
   Admin,
@@ -26,6 +26,7 @@ import {
   InfoExam,
   UpdateExam,
 } from './pages';
+
 
 class App extends Component {
   render() {
@@ -39,6 +40,7 @@ class App extends Component {
         <Route exact path={routes.ITEM_INSERT} component={ItemInsert} />
         <Route exact path={routes.ITEM_UPDATE} component={ItemUpdate} /> */}
         <Route exact path={routes.EXAMS} component={Exams} />
+        <Route exact path={routes.CREATEEXAMS} component={CreateExams} />
       </Switch>
     );
 
