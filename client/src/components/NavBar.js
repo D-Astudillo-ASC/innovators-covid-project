@@ -22,8 +22,8 @@ const Nav = styled.nav.attrs({
 
 const navBarItems = [
   {
-    name: 'Items',
-    toPathname: '/items',
+    name: 'Exams',
+    toPathname: '/exams',
     className: 'nav-link',
   },
   {
