@@ -51,7 +51,7 @@ const Table = ({ columns, data }) => {
 };
 
 const ExamData = () => {
-  let [exams, setExams] = useState([]);
+  let [admin, setExams] = useState([]);
   useEffect(() => {
     api
       .getAllExams()
@@ -84,7 +84,7 @@ const ExamData = () => {
         console.log(`Error getting all exams: ${err}`);
       });
   }, []);
-  return exams;
+  return admin;
   // <ul>
   //   {exams.map(exam => (
   //     <li key={`exam-${exam._id}`}>{exam.patient_Id}</li>
@@ -181,7 +181,7 @@ const columns = [
   //   Header: 'Zip Code',
   // },
 ];
-const Exams = () => {
+const Admin = () => {
   const data = ExamData();
   // console.log('data');
   // console.log(data);
@@ -215,4 +215,4 @@ const Exams = () => {
     //   </Wrapper>
   );
 };
-export default Exams;
+export default Admin;
