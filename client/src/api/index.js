@@ -14,21 +14,21 @@ const api = axios.create({
 export const getAllExams = payload => api.get(`/exams`, payload);
 export const getPatient = PATIENT_ID => api.get(`/patient${PATIENT_ID}`);
 
-export const getAllItems = payload => api.get(`/items`, payload);
+// export const getAllItems = payload => api.get(`/items`, payload);
 
-export const getItemById = id => api.get(`/item/${id}`);
-export const insertItem = payload => api.post(`/item`, payload);
-export const updateItemById = (id, payload) => api.put(`/item/${id}`, payload);
-export const deleteItemById = id => api.delete(`/item/${id}`);
+// export const getItemById = id => api.get(`/item/${id}`);
+// export const insertItem = payload => api.post(`/item`, payload);
+// export const updateItemById = (id, payload) => api.put(`/item/${id}`, payload);
+// export const deleteItemById = id => api.delete(`/item/${id}`);
 
 const apis = {
   getAllExams,
   getPatient,
-  getAllItems,
-  getItemById,
-  insertItem,
-  updateItemById,
-  deleteItemById,
+  // getAllItems,
+  // getItemById,
+  // insertItem,
+  // updateItemById,
+  // deleteItemById,
 };
 
 export default apis;
