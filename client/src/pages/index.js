@@ -5,5 +5,6 @@ import ItemsPlain from './ItemsPlain';
 import ItemsTable from './ItemsTable';
 import ItemUpdate from './ItemUpdate';
 import Exams from './Exams';
+import CreateExams from './CreateExams';
 
-export { ItemInsert, Items, ItemsList, ItemsPlain, ItemsTable, ItemUpdate, Exams };
+export { ItemInsert, Items, ItemsList, ItemsPlain, ItemsTable, ItemUpdate, Exams, CreateExams };

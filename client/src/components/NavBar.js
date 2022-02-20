@@ -27,8 +27,8 @@ const navBarItems = [
     className: 'nav-link',
   },
   {
-    name: 'Create Item',
-    toPathname: '/item/create',
+    name: 'Create Exams',
+    toPathname: '/createExams',
     className: 'nav-link',
   },
 ];
