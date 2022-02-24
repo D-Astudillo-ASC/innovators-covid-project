@@ -20,7 +20,7 @@ import { NavBar, PageLayout } from './components';
 import {
   Exams,
   Admin,
-  CreateExam,
+  CreateExams,
   DisplayExam,
   DisplayPatientInfo,
   InfoExam,
