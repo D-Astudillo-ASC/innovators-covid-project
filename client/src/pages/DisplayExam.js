@@ -72,7 +72,7 @@ class DisplayExam extends Component{
                 <p>{exams.age}</p>
 
                 <h1>Sex:</h1>
-                <p></p>
+                <p>{exams.sex}</p>
 
                 <h1>BMI:</h1>
                 <p>{exams.bmi}</p>
