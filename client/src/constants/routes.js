@@ -3,7 +3,7 @@ const HOME = '/';
 // const ABOUT = '/about';
 // const SIGN_UP = '/signup';
 // const LOG_IN = '/login';
-const EXAMS = '/exams';
+const EXAMS = '/Exams';
 
 // Post routes
 
@@ -11,8 +11,8 @@ const EXAMS = '/exams';
 const ITEM = '/item/:id';
 const ITEM_INSERT = '/item/create';
 const ITEM_UPDATE = '/item/update/:id';**/
-const CREATEEXAMS = '/createExams';
-
+const CREATEEXAMS = '/CreateExams';
+const DISPLAYEXAM = '/Exams/DisplayExam';
 
 export const routes = {
   // HOME,
@@ -24,5 +24,6 @@ export const routes = {
   // ITEM_INSERT,
   // ITEM_UPDATE,
   EXAMS,
-  CREATEEXAMS
+  CREATEEXAMS,
+  DISPLAYEXAM,
 };
