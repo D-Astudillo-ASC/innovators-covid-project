@@ -13,20 +13,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/App.css';
 
 // Static/Stateless
-// import { NavBar, PageLayout, Welcome } from './components';
 import { NavBar, PageLayout } from './components';
 // Pages
-
 import {
   Exams,
   Admin,
-  CreateExam,
+  CreateExams,
   DisplayExam,
   DisplayPatientInfo,
   InfoExam,
   UpdateExam,
 } from './pages';
-
 
 class App extends Component {
   render() {
@@ -41,6 +38,7 @@ class App extends Component {
         <Route exact path={routes.ITEM_UPDATE} component={ItemUpdate} /> */}
         <Route exact path={routes.EXAMS} component={Exams} />
         <Route exact path={routes.CREATEEXAMS} component={CreateExams} />
+        <Route exact path={routes.DISPLAYEXAMS} component={DisplayExam} />
       </Switch>
     );
 

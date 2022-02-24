@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
 import { useTable } from 'react-table';
 import api from '../api';
@@ -89,7 +89,7 @@ const ExamData = () => {
   //   {exams.map(exam => (
   //     <li key={`exam-${exam._id}`}>{exam.patient_Id}</li>
   //   ))}
-  // </ul>
+  // </ul>;
 };
 const columns = [
   {
@@ -98,18 +98,27 @@ const columns = [
     // // filterable: true,
     Cell: props => {
       const { original } = props.cell.row;
-      return <span data-item-id={original.name}>{props.value}</span>;
+      return (
+        <Link to="DisplayPatientInfo">
+          <span data-item-id={original.name}>{props.value}</span>
+        </Link>
+      );
     },
   },
   {
     Header: 'Exam ID',
     accessor: 'exam_Id',
-    // // filterable: true,
+    // filterable: true,
     Cell: props => {
       const { original } = props.cell.row;
-      return <span data-name={original.name}>{props.value}</span>;
+      return (
+        <Link to="/DisplayExam">
+          <span data-name={original.name}>{props.value}</span>
+        </Link>
+      );
     },
   },
+
   {
     Header: 'Image',
     // accessor: 'daysOfWeek',
@@ -140,15 +149,15 @@ const columns = [
       return <span data-timeframe={original.name}>{props.value || '-'}</span>;
     },
   },
-  // {
-  //   Header: 'Brixia Score',
-  //   accessor: 'priority',
-  //   // filterable: true,
-  //   Cell: props => {
-  //     const { original } = props.cell.row;
-  //     return <span data-priority={original.priority}>{props.value}</span>;
-  //   },
-  // },
+  {
+    Header: 'Brixia Score',
+    accessor: 'priority',
+    // filterable: true,
+    Cell: props => {
+      const { original } = props.cell.row;
+      return <span data-priority={original.priority}>{props.value}</span>;
+    },
+  },
   {
     Header: 'Age',
     accessor: 'age',
