@@ -26,44 +26,44 @@ getItems = async (req, res) => {
       res.json(exams);
     });
   });
-};
 
-getItemById = async (req, res) => {
+
+getExamById = async (req, res) => {
   await Exam.findById(req.params.id)
     .then(exam => res.json(exam))
     .catch(err => res.status(400).json('Error: ' + err));
 };
 
-createItem = (req, res) => {
-  const patient_id = req.body.patient_id;
-  const exam_id = req.body.exam_id;
-  const image_url = storage_link + patient_id + req.body.xray_type + exam_id + img_type;
-  const key_findings = req.body.key_findings;
-  const brixia_scores = req.body.brixia_scores.toString();
+createExam = (req, res) => {
+  const patient_id = req.body.examPatientId;
+  const exam_Id = req.body.examId;
+  const image_url = req.body.imageUrl;
+  const key_findings = req.body.keyFindings;
+  const brixia_scores = req.body.brixiaScores;
 
   // build new exam object
   const newExam = new Exam({
     patient_id,
-    exam_id,
+    exam_Id,
     image_url,
     key_findings,
     brixia_scores,
   });
 
-  // save new patient into database
+  // save new exam into database
   newExam
     .save()
     .then(() => res.json('Exam added!'))
     .catch(err => res.status(400).json('Error: ' + err));
 };
 
-updateItem = (req, res) => {
+updateExam = (req, res) => {
   Exam.findByIdAndUpdate(req.params.id, req.body)
     .then(exam => res.json('Updated succesfully'))
     .catch(err => res.status(400).json('Error: ' + err));
 };
 
-deleteItem = async (req, res) => {
+deleteExam = async (req, res) => {
   await Exam.findByIdAndDelete(req.params.id)
     .then(() => res.json('Exam deleted!'))
     .catch(err => res.status(400).json('Error: ' + err));
@@ -77,9 +77,9 @@ deleteItem = async (req, res) => {
 // };
 
 module.exports = {
-  getItems,
-  getItemById,
-  createItem,
-  updateItem,
-  deleteItem,
+  getExams,
+  getExamById,
+  createExam,
+  updateExam,
+  deleteExam,
 };

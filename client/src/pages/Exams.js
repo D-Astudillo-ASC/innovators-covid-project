@@ -69,7 +69,11 @@ const columns = [
     // // filterable: true,
     Cell: props => {
       const { original } = props.cell.row;
-      return <span data-item-id={original.name}>{props.value}</span>;
+      return (
+        <Link to="DisplayPatientInfo">
+          <span data-item-id={original.name}>{props.value}</span>
+        </Link>
+      );
     },
   },
   {
@@ -77,9 +81,14 @@ const columns = [
     accessor: 'exam_Id',
     Cell: props => {
       const { original } = props.cell.row;
-      return <span data-name={original.name}>{props.value}</span>;
+      return (
+        <Link to="/DisplayExam">
+          <span data-name={original.name}>{props.value}</span>
+        </Link>
+      );
     },
   },
+
   {
     Header: 'Image',
     accessor: 'png_filename',
@@ -132,6 +141,17 @@ const Exams = () => {
       <CssBaseline />
       <Table data={data} columns={columns} />
     </Wrapper>
+
+    //   <Wrapper>
+    //     <CssBaseline />
+    //     {/* {(items || []).length > 0 ? ( */}
+    //     {(data || []).length > 0 ? (
+    //       // <Table data={items} columns={columns} />
+    //       <Table data={data} columns={columns} />
+    //     ) : (
+    //       `No items to render... :(`
+    //     )}
+    //   </Wrapper>
   );
 };
 export default Exams;
