@@ -3,7 +3,7 @@ const Patient = require('../models/patient-model.js');
 const storage_link = 'https://ohif-hack-diversity-covid.s3.amazonaws.com/covid-png/';
 const img_type = '.png';
 
-getItems = async (req, res) => {
+getExams = async (req, res) => {
   await Exam.find().then(exams => {
     let patientPromises = exams.map(exam => {
       const patientId = exam['patient_Id'];
@@ -26,7 +26,7 @@ getItems = async (req, res) => {
       res.json(exams);
     });
   });
-
+};
 
 getExamById = async (req, res) => {
   await Exam.findById(req.params.id)
