@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Form, Button, Card, Row, Col, FloatingLabel} from 'react-bootstrap';
-
+import { Form, Button, Card, Row, Col, FloatingLabel } from 'react-bootstrap';
 
 class CreateExams extends Component{
     constructor(props) {
@@ -168,14 +167,14 @@ class CreateExams extends Component{
                 <Form.Control type="text" value={this.state.imageUrl} onChange={this.onChangeImageUrl}/>
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Date:</Form.Label>
-                <Form.Control type="text"/>
-                </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Date:</Form.Label>
+              <Form.Control type="text" />
+            </Form.Group>
 
-                <Form.Label>Key Findings:</Form.Label>
-                <FloatingLabel controlId="floatingTextarea2" label="Key Findings">
-                <Form.Control
+            <Form.Label>Key Findings:</Form.Label>
+            <FloatingLabel controlId="floatingTextarea2" label="Key Findings">
+              <Form.Control
                 as="textarea"
                 placeholder="Write key findings here"
                 style={{ height: '100px' }}
