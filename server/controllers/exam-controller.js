@@ -1,12 +1,32 @@
 const Exam = require('../models/exam-model.js');
+const Patient = require('../models/patient-model.js');
 const storage_link = 'https://ohif-hack-diversity-covid.s3.amazonaws.com/covid-png/';
 const img_type = '.png';
 
-getExams = async (req, res) => {
-  await Exam.find()
-    .then(exams => res.json(exams))
-    .catch(err => res.status(400).json('Error: ' + err));
-};
+getItems = async (req, res) => {
+  await Exam.find().then(exams => {
+    let patientPromises = exams.map(exam => {
+      const patientId = exam['patient_Id'];
+      return Patient.find({ PATIENT_ID: patientId });
+    });
+
+    Promise.all(patientPromises).then(values => {
+      let idx = 0;
+      values.forEach(value => {
+        let patientObj = value[0];
+
+        let curExam = exams[idx]['_doc'];
+        Object.assign(curExam, {
+          age: patientObj['_doc']['AGE'],
+          sex: patientObj['_doc']['SEX'],
+          latest_bmi: patientObj['_doc']['LATEST_BMI'],
+        });
+        idx++;
+      });
+      res.json(exams);
+    });
+  });
+
 
 getExamById = async (req, res) => {
   await Exam.findById(req.params.id)
@@ -48,6 +68,13 @@ deleteExam = async (req, res) => {
     .then(() => res.json('Exam deleted!'))
     .catch(err => res.status(400).json('Error: ' + err));
 };
+
+// deleteExamById = async (req, res) => {
+//   await Exam.findOneAndRemove({EXAM_ID: examId})
+//   await Exam.findByIdAndDelete(req.params.id)
+//     .then(() => res.json('Exam deleted!'))
+//     .catch(err => res.status(400).json('Error: ' + err));
+// };
 
 module.exports = {
   getExams,

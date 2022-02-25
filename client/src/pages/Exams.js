@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { Route, Switch } from 'react-router-dom';
 import { useTable } from 'react-table';
 import api from '../api';
 import MaUTable from '@material-ui/core/Table';
@@ -56,40 +54,13 @@ const ExamData = () => {
     api
       .getAllExams()
       .then(res => {
-        //console.log(res.data);
-        // const examData = res.data;
-        //console.log(res.data);
-        //setExams([...res.data]);
-        return res.data;
-      })
-      .then(examData => {
-        examData.forEach(exam => {
-          api
-            .getPatient(exam.patient_Id)
-            .then(patient => {
-              const patientData = patient.data[0];
-              exam['age'] = patientData['AGE'];
-              exam['sex'] = patientData['SEX'];
-              exam['latest_bmi'] = patientData['LATEST_BMI'];
-              //console.log(exam);
-            })
-            .catch(patientError => {
-              console.log(`Error getting patient data: ${patientError}`);
-            });
-        });
-        //let examsPatArr = Promise.all(examsPatPromises);
-        setExams(examData);
+        setExams(res.data);
       })
       .catch(err => {
         console.log(`Error getting all exams: ${err}`);
       });
   }, []);
   return exams;
-  // <ul>
-  //   {exams.map(exam => (
-  //     <li key={`exam-${exam._id}`}>{exam.patient_Id}</li>
-  //   ))}
-  // </ul>;
 };
 const columns = [
   {
@@ -108,7 +79,6 @@ const columns = [
   {
     Header: 'Exam ID',
     accessor: 'exam_Id',
-    // filterable: true,
     Cell: props => {
       const { original } = props.cell.row;
       return (
@@ -121,25 +91,15 @@ const columns = [
 
   {
     Header: 'Image',
-    // accessor: 'daysOfWeek',
-    // // filterable: true,
-    // Cell: props => {
-    //   const { daysOfWeek } = props.cell.row.original;
-    //   let daysToDisplay = '';
-    //   if (daysOfWeek && typeof daysOfWeek === 'object') {
-    //     for (const day in daysOfWeek) {
-    //       daysToDisplay =
-    //         daysToDisplay === '' ? daysOfWeek[day] : `${daysToDisplay}, ${daysOfWeek[day]}`;
-    //     }
-    //   }
-    //   return (
-    //     <span
-    //       data-daysofweek={daysOfWeek && JSON.stringify(daysOfWeek)}
-    //       data-daysofweek-by-id={props.value}>
-    //       {daysToDisplay || '-'}
-    //     </span>
-    //   );
-    // },
+    accessor: 'png_filename',
+    Cell: props => {
+      return (
+        <img
+          style={{ height: '80px', width: '80px' }}
+          src={`https://ohif-hack-diversity-covid.s3.amazonaws.com/covid-png/${props.value}`}
+        />
+      );
+    },
   },
   {
     Header: 'Key Findings',
@@ -147,15 +107,6 @@ const columns = [
     Cell: props => {
       const { original } = props.cell.row;
       return <span data-timeframe={original.name}>{props.value || '-'}</span>;
-    },
-  },
-  {
-    Header: 'Brixia Score',
-    accessor: 'priority',
-    // filterable: true,
-    Cell: props => {
-      const { original } = props.cell.row;
-      return <span data-priority={original.priority}>{props.value}</span>;
     },
   },
   {
@@ -179,37 +130,16 @@ const columns = [
     accessor: 'latest_bmi',
     Cell: props => {
       const { original } = props.cell.row;
-      console.log('Bmi props');
-      console.log(props);
-      // console.log(props.cell.row);
-
       return <span data-name={original.name}>{props.value}</span>;
     },
   },
-  // {
-  //   Header: 'Zip Code',
-  // },
 ];
 const Exams = () => {
   const data = ExamData();
-  // console.log('data');
-  // console.log(data);
   return (
     <Wrapper>
-      {(data || []).length > 0 ? ( // defeats the purpose of using `isLoading` prop?
-        <>
-          <CssBaseline />
-          <Table data={data} columns={columns} />
-        </>
-      ) : (
-        `No items to render... :(`
-      )}
-      {/* {(items || []).length > 0 ? (
       <CssBaseline />
-      <Table data={ExamData()} columns={columns} />
-      ) : ("")} */}
-      {/* <CssBaseline />
-      <Table data={ExamData()} columns={columns} /> */}
+      <Table data={data} columns={columns} />
     </Wrapper>
 
     //   <Wrapper>
