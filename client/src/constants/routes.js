@@ -12,7 +12,7 @@ const ITEM = '/item/:id';
 const ITEM_INSERT = '/item/create';
 const ITEM_UPDATE = '/item/update/:id';**/
 const CREATEEXAMS = '/CreateExams';
-const DISPLAYEXAM = '/Exams/DisplayExam';
+const DISPLAYEXAM = 'DisplayExam/:id';
 
 export const routes = {
   // HOME,

@@ -13,7 +13,7 @@ const api = axios.create({
 
 export const getAllExams = payload => api.get(`/Exams`, payload);
 export const createExams = payload => api.get(`/CreateExams`, payload);
-// export const displayExam = payload => api.get(`/DisplayExam`, payload);
+ export const displayExam = id => api.get(`/DisplayExam/${id}`);
 export const getPatient = PATIENT_ID => api.get(`/patient${PATIENT_ID}`);
 
 // export const getAllItems = payload => api.get(`/items`, payload);
