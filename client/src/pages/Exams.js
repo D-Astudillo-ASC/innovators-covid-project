@@ -17,6 +17,16 @@ const Wrapper = styled.div`
   }
 `;
 
+const Delete = styled.a`
+  color: red;
+  text-decoration: none; 
+`;
+
+const Update = styled.a`
+  color: blue;
+  text-decoration: none; 
+`;
+
 const Table = ({ columns, data }) => {
   const { getTableProps, headerGroups, rows, prepareRow } = useTable({
     columns,
@@ -186,10 +196,40 @@ const columns = [
       return <span data-name={original.name}>{props.value}</span>;
     },
   },
-  // {
-  //   Header: 'Zip Code',
-  // },
+  {
+    Header: 'Zip Code',
+    accessor: 'zip',
+    Cell: props => {
+      const { original } = props.cell.row;
+      // console.log(props.cell);
+      console.log(props.cell.row.original['patient_Id']);
+      return <span data-name={original.name}>{props.value}</span>;
+    },
+
+  },
+  {
+    // MOVE TO ADMIN 
+    Header: 'Admin Privileges',
+    Accessor: (str) => 'delete', 
+    Cell: props => { 
+    return <span><Update href= "UpdateExam.js"> Update </Update>
+          {/* <Delete onClick ={() => {deleteExam(props.values["patient_Id"], props.values['exam_Id']);}}> Delete </Delete> </span> */}
+          <Delete onClick ={() => {
+            // prompt to confrim delete then make api call to get rid of row
+            api.deleteExam({EXAM_ID: props.cell.row.original['exam_Id'], PATIENT_ID: props.cell.row.original['patient_Id']}).then(() => {});
+            props.cell.row = undefined; 
+            // constd ataCopy = [...Exams]; 
+            // dataCopy.splice(props.index, 1);
+            // setExams(dataCopy); 
+            // console.log(dataCopy);
+              // let exams = this.state.exams([]);
+              // exams.splice(exams.index, 1);
+              // this.setState({exams})
+            }}> Delete </Delete> </span>
+        }
+      }
 ];
+
 const Exams = () => {
   const data = ExamData();
   // console.log('data');

@@ -14,8 +14,9 @@ const api = axios.create({
 export const getAllExams = payload => api.get(`/Exams`, payload);
 export const createExams = payload => api.get(`/CreateExams`, payload);
 // export const displayExam = payload => api.get(`/DisplayExam`, payload);
-export const getPatient = PATIENT_ID => api.get(`/patient${PATIENT_ID}`);
-
+export const getExam = payload => api.get('/Exam', { params: payload });
+export const getByPatientId = payload => api.get(`/patient`, { params: payload });
+export const deleteExam = payload => api.delete('/exam', { params: payload}); 
 // export const getAllItems = payload => api.get(`/items`, payload);
 
 // export const getItemById = id => api.get(`/item/${id}`);
@@ -26,7 +27,12 @@ export const getPatient = PATIENT_ID => api.get(`/patient${PATIENT_ID}`);
 const apis = {
   getAllExams,
   createExams,
+<<<<<<< Updated upstream
   getPatient,
+=======
+  getByPatientId,
+  deleteExam, 
+>>>>>>> Stashed changes
   // displayExam,
   // getAllItems,
   // getItemById,
