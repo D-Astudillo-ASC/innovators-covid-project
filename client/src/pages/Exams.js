@@ -113,6 +113,13 @@ const columns = [
     },
   },
   {
+    Header: 'Brixia Scores',
+    Cell: props => {
+      const { original } = props.cell.row;
+      return <span data-timeframe={original.name}>{'1,2,3,4'}</span>;
+    },
+  },
+  {
     Header: 'Age',
     accessor: 'age',
     Cell: props => {
@@ -131,6 +138,14 @@ const columns = [
   {
     Header: 'BMI',
     accessor: 'latest_bmi',
+    Cell: props => {
+      const { original } = props.cell.row;
+      return <span data-name={original.name}>{props.value}</span>;
+    },
+  },
+  {
+    Header: 'Zip Code',
+    accessor: 'zip',
     Cell: props => {
       const { original } = props.cell.row;
       return <span data-name={original.name}>{props.value}</span>;
