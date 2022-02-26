@@ -20,6 +20,7 @@ getExams = async (req, res) => {
           age: patientObj['_doc']['AGE'],
           sex: patientObj['_doc']['SEX'],
           latest_bmi: patientObj['_doc']['LATEST_BMI'],
+          zip: patientObj['_doc']['ZIP'],
         });
         idx++;
       });
@@ -30,7 +31,6 @@ getExams = async (req, res) => {
 
 getExam = async (req, res) => {
   await Exam.find({ patient_Id: req.query.patient_Id, exam_Id: req.query.exam_Id }).then(exam => {
-    console.log(exam);
     res.json(exam);
   });
 };

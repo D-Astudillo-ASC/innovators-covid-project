@@ -7,16 +7,9 @@ getPatients = async (req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 };
 
-// getPatientById = async (req, res) => {
-//   await Patient.findById(req.params.id)
-//     .then(patient => res.json(patient))
-//     .catch(err => res.status(400).json('Error: ' + err));
-// };
 getByPatientId = async (req, res) => {
-  console.log(req.query);
   await Patient.find({ PATIENT_ID: req.query.PATIENT_ID })
     .then(patient => {
-      console.log(patient);
       res.json(patient[0]);
     })
     .catch(err => res.status(400).json('Error: ' + err));
