@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL || 'http://localhost:3000/api',
-  hostname: process.env.REEACT_APP_API_HOST || 'http://localhost:3000/',
+  hostname: process.env.REACT_APP_API_HOST || 'http://localhost:3000/',
   // httpsAgent: https.Agent({
   //     rejectUnauthorized: false,
   // }),
@@ -14,7 +14,8 @@ const api = axios.create({
 export const getAllExams = payload => api.get(`/Exams`, payload);
 export const createExams = payload => api.get(`/CreateExams`, payload);
 // export const displayExam = payload => api.get(`/DisplayExam`, payload);
-export const getPatient = PATIENT_ID => api.get(`/patient${PATIENT_ID}`);
+export const getExam = payload => api.get('/Exam', { params: payload });
+export const getByPatientId = payload => api.get(`/patient`, { params: payload });
 
 // export const getAllItems = payload => api.get(`/items`, payload);
 
@@ -25,8 +26,9 @@ export const getPatient = PATIENT_ID => api.get(`/patient${PATIENT_ID}`);
 
 const apis = {
   getAllExams,
+  getExam,
   createExams,
-  getPatient,
+  getByPatientId,
   // displayExam,
   // getAllItems,
   // getItemById,

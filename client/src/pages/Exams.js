@@ -49,7 +49,7 @@ const Table = ({ columns, data }) => {
   );
 };
 
-const ExamData = () => {
+const ExamsData = () => {
   let [exams, setExams] = useState([]);
   useEffect(() => {
     api
@@ -82,14 +82,16 @@ const columns = [
     accessor: 'exam_Id',
     Cell: props => {
       const { original } = props.cell.row;
+      let patient_Id = props.cell.row.cells[0].value;
+      let exam_Id = props.cell.row.cells[1].value;
       return (
-        <Link to="/DisplayExam">
+        <Link
+          to={{ pathname: '/DisplayExam', state: { patient_Id: patient_Id, exam_Id: exam_Id } }}>
           <span data-name={original.name}>{props.value}</span>
         </Link>
       );
     },
   },
-
   {
     Header: 'Image',
     accessor: 'png_filename',
@@ -136,7 +138,7 @@ const columns = [
   },
 ];
 const Exams = () => {
-  const data = ExamData();
+  const data = ExamsData();
   return (
     <Wrapper>
       <CssBaseline />
