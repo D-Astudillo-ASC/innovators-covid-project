@@ -27,12 +27,8 @@ export const deleteExam = payload => api.delete('/exam', { params: payload});
 const apis = {
   getAllExams,
   createExams,
-<<<<<<< Updated upstream
-  getPatient,
-=======
   getByPatientId,
   deleteExam, 
->>>>>>> Stashed changes
   // displayExam,
   // getAllItems,
   // getItemById,
