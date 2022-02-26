@@ -28,10 +28,11 @@ getExams = async (req, res) => {
   });
 };
 
-getExamById = async (req, res) => {
-  await Exam.findById(req.params.id)
-    .then(exam => res.json(exam))
-    .catch(err => res.status(400).json('Error: ' + err));
+getExam = async (req, res) => {
+  await Exam.find({ patient_Id: req.query.patient_Id, exam_Id: req.query.exam_Id }).then(exam => {
+    console.log(exam);
+    res.json(exam);
+  });
 };
 
 createExam = (req, res) => {
@@ -78,7 +79,7 @@ deleteExam = async (req, res) => {
 
 module.exports = {
   getExams,
-  getExamById,
+  getExam,
   createExam,
   updateExam,
   deleteExam,
