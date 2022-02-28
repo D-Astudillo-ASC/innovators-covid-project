@@ -112,8 +112,9 @@ class DisplayExam extends Component {
 
               {/* <h1>Img URL:</h1> */}
               <Form.Label>Exam Image</Form.Label>
-              <img src={imageUrl || ''} style={{ height: '150px', width: '150px' }}></img>
-
+              <p>
+                <img src={imageUrl || ''} style={{ height: '150px', width: '150px' }}></img>
+              </p>
               {/* <h1>Date:</h1> */}
               <Form.Label>Date:</Form.Label>
               <p></p>
