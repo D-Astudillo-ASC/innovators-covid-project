@@ -15,8 +15,8 @@ export const getAllExams = payload => api.get(`/Exams`, payload);
 export const createExams = payload => api.get(`/CreateExams`, payload);
 // export const displayExam = payload => api.get(`/DisplayExam`, payload);
 export const getExam = payload => api.get('/Exam', { params: payload });
-export const getByPatientId = payload => api.get(`/patient`, { params: payload });
-
+export const getPatByPatientId = payload => api.get(`/patient`, { params: payload });
+export const getExamsByPatientId = payload => api.get('/exams/patient/', { params: payload });
 // export const getAllItems = payload => api.get(`/items`, payload);
 
 // export const getItemById = id => api.get(`/item/${id}`);
@@ -28,7 +28,8 @@ const apis = {
   getAllExams,
   getExam,
   createExams,
-  getByPatientId,
+  getPatByPatientId,
+  getExamsByPatientId,
   // displayExam,
   // getAllItems,
   // getItemById,

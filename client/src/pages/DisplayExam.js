@@ -25,7 +25,7 @@ class DisplayExam extends Component {
     if (this.props.location.state !== undefined) {
       const { patient_Id, exam_Id } = this.props.location.state;
       api
-        .getByPatientId({ PATIENT_ID: patient_Id })
+        .getPatByPatientId({ PATIENT_ID: patient_Id })
         .then(res => {
           let patient = res.data;
           this.setState(
