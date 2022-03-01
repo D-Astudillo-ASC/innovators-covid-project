@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { Route, Switch } from 'react-router-dom';
-import { useTable } from 'react-table';
 import api from '../api';
+<<<<<<< HEAD
 import MaUTable from '@material-ui/core/Table';
 import { CssBaseline, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 
@@ -61,46 +59,24 @@ const Table = ({ columns, data }) => {
 };
 
 const ExamData = () => {
+=======
+import ExamTable from '../components/ExamTable';
+const ExamsData = () => {
+>>>>>>> origin
   let [exams, setExams] = useState([]);
   useEffect(() => {
     api
       .getAllExams()
       .then(res => {
-        //console.log(res.data);
-        // const examData = res.data;
-        //console.log(res.data);
-        //setExams([...res.data]);
-        return res.data;
-      })
-      .then(examData => {
-        examData.forEach(exam => {
-          api
-            .getPatient(exam.patient_Id)
-            .then(patient => {
-              const patientData = patient.data[0];
-              exam['age'] = patientData['AGE'];
-              exam['sex'] = patientData['SEX'];
-              exam['latest_bmi'] = patientData['LATEST_BMI'];
-              //console.log(exam);
-            })
-            .catch(patientError => {
-              console.log(`Error getting patient data: ${patientError}`);
-            });
-        });
-        //let examsPatArr = Promise.all(examsPatPromises);
-        setExams(examData);
+        setExams(res.data);
       })
       .catch(err => {
         console.log(`Error getting all exams: ${err}`);
       });
   }, []);
   return exams;
-  // <ul>
-  //   {exams.map(exam => (
-  //     <li key={`exam-${exam._id}`}>{exam.patient_Id}</li>
-  //   ))}
-  // </ul>;
 };
+<<<<<<< HEAD
 const columns = [
   {
     Header: 'Patient ID',
@@ -230,38 +206,10 @@ const columns = [
       }
 ];
 
+=======
+>>>>>>> origin
 const Exams = () => {
-  const data = ExamData();
-  // console.log('data');
-  // console.log(data);
-  return (
-    <Wrapper>
-      {(data || []).length > 0 ? ( // defeats the purpose of using `isLoading` prop?
-        <>
-          <CssBaseline />
-          <Table data={data} columns={columns} />
-        </>
-      ) : (
-        `No items to render... :(`
-      )}
-      {/* {(items || []).length > 0 ? (
-      <CssBaseline />
-      <Table data={ExamData()} columns={columns} />
-      ) : ("")} */}
-      {/* <CssBaseline />
-      <Table data={ExamData()} columns={columns} /> */}
-    </Wrapper>
-
-    //   <Wrapper>
-    //     <CssBaseline />
-    //     {/* {(items || []).length > 0 ? ( */}
-    //     {(data || []).length > 0 ? (
-    //       // <Table data={items} columns={columns} />
-    //       <Table data={data} columns={columns} />
-    //     ) : (
-    //       `No items to render... :(`
-    //     )}
-    //   </Wrapper>
-  );
+  const data = ExamsData();
+  return <ExamTable data={data} isAdmin={false} />;
 };
 export default Exams;

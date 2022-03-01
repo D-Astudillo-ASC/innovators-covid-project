@@ -3,10 +3,7 @@ const Schema = mongoose.Schema;
 
 const Exam = new Schema(
   {
-    //Exam_id: new mongoose.Mongoose.Types.ObjectId,
-    //patient_id: new mongoose.Mongoose.Types.ObjectId,
-
-    patient_id: {
+    patient_Id: {
       type: String,
       required: true,
     },

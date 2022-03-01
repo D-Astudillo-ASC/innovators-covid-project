@@ -1,100 +1,135 @@
 import React, { Component } from 'react';
+// import axios from 'axios';
+import api from '../api';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Form, Button, Card, Row, Col, FloatingLabel } from 'react-bootstrap';
-import { Exams } from '../pages';
 
 class DisplayExam extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      exams: {
-        patientId: '',
-        examId: '',
-        imageImg: '',
-        xrayType: '',
-        keyFindings: '',
-        brixiaScores: [],
-      },
-      patients: {
-        patientId: '',
-        age: 0,
-        sex: '',
-        bmi: 0,
-        zipcode: 0,
-      },
+      examId: '',
+      imageUrl: '',
+      keyFindings: '',
+      brixiaScores: [],
+
+      patientId: '',
+      age: 0,
+      sex: '',
+      latest_bmi: 0,
+      zip: 0,
     };
   }
 
+  componentDidMount() {
+    if (this.props.location.state !== undefined) {
+      const { patient_Id, exam_Id } = this.props.location.state;
+      api
+        .getPatByPatientId({ PATIENT_ID: patient_Id })
+        .then(res => {
+          let patient = res.data;
+          this.setState(
+            {
+              patientId: patient['PATIENT_ID'],
+              age: patient['AGE'],
+              sex: patient['SEX'],
+              latest_bmi: patient['LATEST_BMI'],
+              zip: patient['ZIP'],
+            },
+            () => {
+              api
+                .getExam({ patient_Id: patient_Id, exam_Id: exam_Id })
+                .then(res => {
+                  let exam = res.data[0];
+                  this.setState({
+                    examId: exam['exam_Id'],
+                    imageUrl: `https://ohif-hack-diversity-covid.s3.amazonaws.com/covid-png/${exam['png_filename']}`,
+                    keyFindings: exam['key_findings'],
+                    brixiaScores: '1,2,3,4',
+                  });
+                })
+                .catch(err => {
+                  console.log(`Error getting exam info: ${err}`);
+                });
+            },
+          );
+        })
+        .catch(err => {
+          console.log(`Error getting patient info: ${err}`);
+        });
+    }
+  }
+
   render() {
+    const {
+      patientId,
+      age,
+      sex,
+      latest_bmi,
+      zip,
+      examId,
+      imageUrl,
+      keyFindings,
+      brixiaScores,
+    } = this.state;
+
     return (
-      <Row className="justify-content-md-center">
-        <Col md="auto">
-          <Form>
-            <h1>Patient Info</h1>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+      <>
+        {this.props.location.state === undefined ? (
+          <Row className="justify-content-md-center"> Exam Not Found </Row>
+        ) : (
+          <Row className="justify-content-md-center">
+            <Col md="auto">
+              <h1>Patient Info</h1>
+
+              {/* <h1>Patient Id:</h1> */}
               <Form.Label>Patient Id:</Form.Label>
-              {/* const patentId = localStorage.getItem.('patientId') */}
-              {/* <Form.Control type={document.getElementById().value} /> */}
-              {/* <Form.Control type="text" /> */}
-            </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Age:</Form.Label>
-              {/* <Form.Control type="text" /> */}
-            </Form.Group>
+              <p>{patientId}</p>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+              {/* <h1>Age:</h1> */}
+              <Form.Label>Age: </Form.Label>
+              <p>{age}</p>
+
+              {/* <h1>Sex:</h1> */}
               <Form.Label>Sex:</Form.Label>
-              {/* <Form.Control type="text" />  */}
-            </Form.Group>
+              <p>{sex}</p>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+              {/* <h1>BMI:</h1> */}
               <Form.Label>BMI:</Form.Label>
-              {/* <Form.Control type="text" />  */}
-            </Form.Group>
+              <p>{latest_bmi}</p>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+              {/* <h1>Zipcode:</h1> */}
               <Form.Label>Zipcode:</Form.Label>
-              {/* <Form.Control type="text" /> */}
-            </Form.Group>
-          </Form>
-        </Col>
-        <Col md="auto">
-          <Form>
-            <h1>Exam Info</h1>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <p>{zip}</p>
+            </Col>
+            <Col md="auto">
+              <h1>Exam Info</h1>
+
+              {/* <h1>Exam Id:</h1> */}
               <Form.Label>Exam Id:</Form.Label>
-              {/* <Form.Control type="text" /> */}
-            </Form.Group>
+              <p>{examId}</p>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Img URL:</Form.Label>
-              {/* <Form.Control type="text" /> */}
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+              {/* <h1>Img URL:</h1> */}
+              <Form.Label>Exam Image</Form.Label>
+              <p>
+                <img src={imageUrl || ''} style={{ height: '150px', width: '150px' }}></img>
+              </p>
+              {/* <h1>Date:</h1> */}
               <Form.Label>Date:</Form.Label>
-              {/* <Form.Control type="text" /> */}
-            </Form.Group>
+              <p></p>
 
-            <Form.Label>Key Findings:</Form.Label>
-            {/* <FloatingLabel controlId="floatingTextarea2" label="Key Findings"> */}
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              {/* <Form.Control
-                as="textarea"
-                placeholder="Write key findings here"
-                style={{ height: '100px' }}
-              /> */}
-              {/* </FloatingLabel> */}
-            </Form.Group>
+              {/* <h1>Key Findings:</h1> */}
+              <Form.Label>Key Findings:</Form.Label>
+              <p>{keyFindings}</p>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+              {/* <h1>Brixia Scores:</h1> */}
               <Form.Label>Brixia Scores:</Form.Label>
-              {/* <Form.Control type="text" /> */}
-            </Form.Group>
-          </Form>
-        </Col>
-      </Row>
+              <p>{brixiaScores}</p>
+            </Col>
+          </Row>
+        )}
+      </>
     );
   }
 }
