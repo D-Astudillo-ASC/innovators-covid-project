@@ -36,6 +36,7 @@ class App extends Component {
         <Route exact path={routes.DISPLAYEXAM} component={DisplayExam} />
         <Route exact path={routes.DISPLAYPATIENT} component={DisplayPatientInfo} />
         <Route exact path={routes.HOME} component={Welcome} />
+        <Route exact path={routes.UPDATEEXAM} component={UpdateExam} />
       </Switch>
     );
 
