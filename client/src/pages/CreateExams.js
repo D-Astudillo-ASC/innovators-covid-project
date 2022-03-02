@@ -92,7 +92,7 @@ class CreateExams extends Component{
           examId: this.state.examId,
           imageUrl: this.state.imageUrl,
           keyFindings: this.state.keyFindings,
-          brixiaScores: this.brixiaScores
+          brixiaScores: this.state.brixiaScores
          }
 
          const patients = {
