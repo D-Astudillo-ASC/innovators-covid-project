@@ -2,7 +2,7 @@
 
 /* this is my commit change - Fran Oliveira */
 
-import React from 'react';
+
 
 // /* Alec's minor code change */
 import React from 'react';

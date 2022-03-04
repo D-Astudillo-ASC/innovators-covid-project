@@ -15,7 +15,6 @@ export const getAllExams = payload => api.get(`/Exams`, payload);
 export const createExams = payload => api.get(`/CreateExams`, payload);
 // export const displayExam = payload => api.get(`/DisplayExam`, payload);
 export const getExam = payload => api.get('/Exam', { params: payload });
-<<<<<<< HEAD
 export const getByPatientId = payload => api.get(`/patient`, { params: payload });
 export const deleteExam = payload => api.delete('/exam', { params: payload}); 
 // export const getAllItems = payload => api.get(`/items`, payload);
@@ -24,22 +23,13 @@ export const deleteExam = payload => api.delete('/exam', { params: payload});
 // export const insertItem = payload => api.post(`/item`, payload);
 // export const updateItemById = (id, payload) => api.put(`/item/${id}`, payload);
 // export const deleteItemById = id => api.delete(`/item/${id}`);
-=======
-export const getPatByPatientId = payload => api.get(`/patient`, { params: payload });
-export const getExamsByPatientId = payload => api.get('/exams/patient/', { params: payload });
->>>>>>> origin
 
 const apis = {
   getAllExams,
   getExam,
   createExams,
-<<<<<<< HEAD
   getByPatientId,
   deleteExam, 
-=======
-  getPatByPatientId,
-  getExamsByPatientId,
->>>>>>> origin
   // displayExam,
 };
 

@@ -81,14 +81,8 @@ updateExam = (req, res) => {
 };
 
 deleteExam = async (req, res) => {
-<<<<<<< HEAD
   console.log(req.query);
   await Exam.findOneAndDelete({exam_Id : req.query.EXAM_ID, patient_Id : req.query.PATIENT_ID}).then((res)=> {console.log(res)});
-=======
-  await Exam.findByIdAndDelete(req.params.id)
-    .then(() => res.json('Exam deleted!'))
-    .catch(err => res.status(400).json('Error: ' + err));
->>>>>>> origin
 };
 
 // deleteExamById = async (req, res) => {
