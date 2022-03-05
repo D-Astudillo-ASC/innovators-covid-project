@@ -8,6 +8,6 @@ router.get('/exams', ExamController.getExams);
 router.post('/exam', ExamController.createExam);
 router.get('/exam', ExamController.getExam);
 router.put('/exam/:id', ExamController.updateExam);
-router.delete('/exam/:id', ExamController.deleteExam);
+router.delete('/exam/', ExamController.deleteExam);
 
 module.exports = router;

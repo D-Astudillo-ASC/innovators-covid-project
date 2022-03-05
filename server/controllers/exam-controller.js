@@ -35,6 +35,22 @@ getExam = async (req, res) => {
   });
 };
 
+getExamsByPatientId = async (req, res) => {
+  let patientObj = await Patient.find({ PATIENT_ID: req.query.patient_Id });
+  let patientData = patientObj[0];
+  await Exam.find({ patient_Id: req.query.patient_Id }).then(exams => {
+    exams.forEach(exam => {
+      Object.assign(exam['_doc'], {
+        age: patientData['_doc']['AGE'],
+        sex: patientData['_doc']['SEX'],
+        latest_bmi: patientData['_doc']['LATEST_BMI'],
+        zip: patientData['_doc']['ZIP'],
+      });
+    });
+    res.json(exams);
+  });
+};
+
 createExam = (req, res) => {
   const patient_Id = req.body.examPatientId;
   const exam_Id = req.body.examId;
@@ -65,9 +81,8 @@ updateExam = (req, res) => {
 };
 
 deleteExam = async (req, res) => {
-  await Exam.findByIdAndDelete(req.params.id)
-    .then(() => res.json('Exam deleted!'))
-    .catch(err => res.status(400).json('Error: ' + err));
+  console.log(req.query);
+  await Exam.findOneAndDelete({exam_Id : req.query.EXAM_ID, patient_Id : req.query.PATIENT_ID}).then((res)=> {console.log(res)});
 };
 
 // deleteExamById = async (req, res) => {
@@ -80,6 +95,7 @@ deleteExam = async (req, res) => {
 module.exports = {
   getExams,
   getExam,
+  getExamsByPatientId,
   createExam,
   updateExam,
   deleteExam,

@@ -25,7 +25,7 @@ class DisplayExam extends Component {
     if (this.props.location.state !== undefined) {
       const { patient_Id, exam_Id } = this.props.location.state;
       api
-        .getByPatientId({ PATIENT_ID: patient_Id })
+        .getPatByPatientId({ PATIENT_ID: patient_Id })
         .then(res => {
           let patient = res.data;
           this.setState(
@@ -112,8 +112,9 @@ class DisplayExam extends Component {
 
               {/* <h1>Img URL:</h1> */}
               <Form.Label>Exam Image</Form.Label>
-              <img src={imageUrl || ''} style={{ height: '150px', width: '150px' }}></img>
-
+              <p>
+                <img src={imageUrl || ''} style={{ height: '150px', width: '150px' }}></img>
+              </p>
               {/* <h1>Date:</h1> */}
               <Form.Label>Date:</Form.Label>
               <p></p>

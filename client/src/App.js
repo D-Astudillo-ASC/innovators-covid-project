@@ -21,6 +21,7 @@ import {
   CreateExams,
   DisplayExam,
   DisplayPatientInfo,
+  Welcome,
   InfoExam,
   UpdateExam,
 } from './pages';
@@ -30,15 +31,16 @@ class App extends Component {
     // TODO: maybe only need one route for Items?
     const publicViews = (
       <Switch>
-        {/* <Route exact path={routes.HOME} component={Welcome} />
-        <Route exact path={routes.ITEMS} component={Items} />
-        <Route exact path={`${routes.ITEMS}/items-plain`} component={Items} />
-        <Route exact path={`${routes.ITEMS}/react-table-v6`} component={Items} />
-        <Route exact path={routes.ITEM_INSERT} component={ItemInsert} />
-        <Route exact path={routes.ITEM_UPDATE} component={ItemUpdate} /> */}
         <Route exact path={routes.EXAMS} component={Exams} />
         <Route exact path={routes.CREATEEXAMS} component={CreateExams} />
+
         <Route exact path={routes.DISPLAYEXAMS} component={DisplayExam} />
+        <Route exact path={routes.ADMIN} component={Admin} />
+
+
+        <Route exact path={routes.DISPLAYPATIENT} component={DisplayPatientInfo} />
+        <Route exact path={routes.HOME} component={Welcome} />
+        <Route exact path={routes.UPDATEEXAM} component={UpdateExam} />
       </Switch>
     );
 
