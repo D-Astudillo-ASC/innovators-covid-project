@@ -92,9 +92,9 @@ class CreateExams extends Component{
           examId: this.state.examId,
           imageUrl: this.state.imageUrl,
           keyFindings: this.state.keyFindings,
-          brixiaScores: this.brixiaScores
+          brixiaScores: this.state.brixiaScores
          }
-
+         
          const patients = {
           patientId: this.state.patientId,
                age: this.state.age,
@@ -102,7 +102,7 @@ class CreateExams extends Component{
                bmi: this.state.bmi,
                zipcode: this.state.zipcode
          }
-
+         console.log(exams);
          axios.post('http://localhost:3000/api/exam', exams)
               .then(res => console.log(res.data))
 
