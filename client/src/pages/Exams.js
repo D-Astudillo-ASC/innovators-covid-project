@@ -17,6 +17,6 @@ const ExamsData = () => {
 };
 const Exams = () => {
   const data = ExamsData();
-  return <ExamTable data={data} isAdmin={true}/>;
+  return <ExamTable data={data} isAdmin={false}/>;
 };
 export default Exams;
