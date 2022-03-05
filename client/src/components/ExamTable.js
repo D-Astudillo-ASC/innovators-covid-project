@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { useTable } from 'react-table';
 import MaUTable from '@material-ui/core/Table';
 import { CssBaseline, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import api from '../api';
 
 import styled from 'styled-components';
 
@@ -34,6 +35,18 @@ const Wrapper = styled.div`
     }
   }
 `;
+
+const Delete = styled.a`
+ color: red;
+ text-decoration: none;
+`;
+ 
+const Update = styled.a`
+ color: blue;
+ text-decoration: none;
+`;
+
+
 
 const Table = ({ columns, data }) => {
   const { getTableProps, headerGroups, rows, prepareRow } = useTable({
@@ -157,13 +170,45 @@ const ExamTable = ({ data, isAdmin }) => {
         return <span data-name={original.name}>{props.value}</span>;
       },
     },
+    {
+      // MOVE TO ADMIN
+      Header: 'Admin Privileges',
+      Accessor: (str) => 'delete',
+      Cell: props => {
+      return <span><Update href= "UpdateExam.js"> Update </Update>
+            {/* <Delete onClick ={() => {deleteExam(props.values["patient_Id"], props.values['exam_Id']);}}> Delete </Delete> </span> */}
+            <Delete onClick ={() => {
+              // prompt to confrim delete then make api call to get rid of row
+              // return window.confirm('Are you sure you want to delete the Exam for this patient?')
+              // console.log(props.cell)
+              
+              console.log(data)
+              data.splice(props.cell, 1)
+              console.log(data)
+              api.deleteExam({EXAM_ID: props.cell.row.original['exam_Id'], PATIENT_ID: props.cell.row.original['patient_Id']}).then(() => {props.cell.row = undefined;});
+              }}> Delete </Delete> </span>
+          } 
+        }
   ];
+
+  if ({isAdmin}.isAdmin == true) { 
   return (
     <Wrapper>
       <CssBaseline />
       <Table data={data} columns={columns} />
     </Wrapper>
   );
+}
+
+if ({isAdmin}.isAdmin == false) { 
+  return (
+    <Wrapper>
+      <CssBaseline />
+      <Table data={data} columns={columns.slice(0,9)} />
+    </Wrapper>
+  );
+} 
 };
+
 
 export default ExamTable;
