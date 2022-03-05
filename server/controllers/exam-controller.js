@@ -52,7 +52,7 @@ getExamsByPatientId = async (req, res) => {
 };
 
 createExam = (req, res) => {
-  const patient_id = req.body.examPatientId;
+  const patient_Id = req.body.examPatientId;
   const exam_Id = req.body.examId;
   const image_url = req.body.imageUrl;
   const key_findings = req.body.keyFindings;
@@ -60,7 +60,7 @@ createExam = (req, res) => {
 
   // build new exam object
   const newExam = new Exam({
-    patient_id,
+    patient_Id,
     exam_Id,
     image_url,
     key_findings,
