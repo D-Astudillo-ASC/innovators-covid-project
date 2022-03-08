@@ -1,8 +1,4 @@
-/* eslint-disable semi */
-
-/* this is my commit change - Fran Oliveira */
-
-
+// /* eslint-disable semi */
 
 // /* Alec's minor code change */
 import React from 'react';
