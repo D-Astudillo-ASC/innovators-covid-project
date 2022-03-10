@@ -33,13 +33,10 @@ class App extends Component {
       <Switch>
         <Route exact path={routes.EXAMS} component={Exams} />
         <Route exact path={routes.CREATEEXAMS} component={CreateExams} />
-
-        <Route exact path={routes.DISPLAYEXAMS} component={DisplayExam} />
-        <Route exact path={routes.ADMIN} component={Admin} />
-
-
+        <Route exact path={routes.DISPLAYEXAM} component={DisplayExam} />
         <Route exact path={routes.DISPLAYPATIENT} component={DisplayPatientInfo} />
-        <Route exact path={routes.HOME} component={Welcome} />
+        <Route exact path={routes.HOME} component={Exams} />
+        <Route exact path={routes.ADMIN} component={Admin} />
         <Route exact path={routes.UPDATEEXAM} component={UpdateExam} />
       </Switch>
     );
