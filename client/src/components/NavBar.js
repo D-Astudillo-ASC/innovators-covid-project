@@ -36,11 +36,6 @@ const navBarItems = [
     toPathname: '/Admin',
     className: 'nav-link',
   },
-  // {
-  //   name: 'Update Exam',
-  //   toPathname: '/updateExam',
-  //   className: 'nav-link',
-  // }
 ];
 
 class NavBar extends Component {
