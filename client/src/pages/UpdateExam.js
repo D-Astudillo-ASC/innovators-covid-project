@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import api from '../api';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Form, Button, Card, Row, Col, FloatingLabel } from 'react-bootstrap';
 
@@ -17,6 +18,7 @@ class UpdateExam extends Component {
     this.onChangePatientBmi = this.onChangePatientBmi.bind(this);
     this.onChangePatientZipcode = this.onChangePatientZipcode.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+
     this.state = {
       examPatientId: '',
       examId: '',
@@ -27,36 +29,52 @@ class UpdateExam extends Component {
       patientId: '',
       age: 0,
       sex: '',
-      bmi: 0,
-      zipcode: 0,
+      latest_bmi: 0,
+      zip: 0,
     };
   }
-
   componentDidMount() {
-    axios
-      .get('https://localhost:3000/exams/' + this.props.match.params.id)
-      .then(response => {
-        this.setState({
-          examPatientId: response.data.examPatientId,
-          examId: response.data.examId,
-          imageUrl: response.data.imageUrl,
-          keyFindings: response.data.keyFindings,
-
-          patientId: response.data.patientId,
-          age: response.data.age,
-          sex: response.data.sex,
-          bmi: response.data.bmi,
-          zipcode: response.data.zipcode,
+    if (this.props.location.state !== undefined) {
+      const { patient_Id, exam_Id } = this.props.location.state;
+      axios
+        .get('http://localhost:3000/api/exam' + this.props.match.params.id)
+        .then(response => {
+          api.getExam({ patient_Id: patient_Id, exam_Id: exam_Id }).then(res => {
+            this.setState({
+              examPatientId: response.data.examPatientId,
+              examId: response.data.examId,
+              imageUrl: response.data.imageUrl,
+              keyFindings: response.data.keyFindings,
+              brixiaScores: response.data.brixiaScores,
+            });
+          });
+        })
+        .catch(err => {
+          console.log(`Error getting exam info: ${err}`);
         });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+      axios
+        .get('http://localhost:3000/api/patient' + this.props.match.params.id)
+        .then(response => {
+          let patient = response.data;
+          api.getPatByPatientId({ PATIENT_ID: patient_Id }).then(res => {
+            this.setState({
+              patientId: patient['PATIENT_ID'],
+              age: patient['AGE'],
+              sex: patient['SEX'],
+              latest_bmi: patient['LATEST_BMI'],
+              zip: patient['ZIP'],
+            });
+          });
+        })
+        .catch(err => {
+          console.log(`Error getting patient info: ${err}`);
+        });
+    }
   }
 
-  onChangeExamPatientId(e) {
-    this.setState({ examPatientId: e.target.value });
-  }
+  /**   onChangeExamPatientId(e){
+     this.setState({examPatientId: e.target.value});
+  }**/
 
   onChangeExamId(e) {
     this.setState({ examId: e.target.value });
@@ -91,11 +109,11 @@ class UpdateExam extends Component {
   }
 
   onChangePatientBmi(e) {
-    this.setState({ bmi: e.target.value });
+    this.setState({ latest_bmi: e.target.value });
   }
 
   onChangePatientZipcode(e) {
-    this.setState({ zipcode: e.target.value });
+    this.setState({ zip: e.target.value });
   }
 
   onSubmit(e) {
@@ -113,20 +131,24 @@ class UpdateExam extends Component {
       examId: this.state.examId,
       imageUrl: this.state.imageUrl,
       keyFindings: this.state.keyFindings,
-      brixiaScores: this.brixiaScores,
+      brixiaScores: this.state.brixiaScores,
     };
 
     const patients = {
       patientId: this.state.patientId,
       age: this.state.age,
       sex: this.state.sex,
-      bmi: this.state.bmi,
+      latest_bmi: this.state.latest_bmi,
       zipcode: this.state.zipcode,
     };
 
-    axios.post('http://localhost:3000/api/exam', exams).then(res => console.log(res.data));
+    axios
+      .post('http://localhost:3000/api/exam' + this.props.match.params.id, exams)
+      .then(res => console.log(res.data));
 
-    axios.post('http://localhost:3000/api/patient', patients).then(res => console.log(res.data));
+    axios
+      .post('http://localhost:3000/api/patient' + this.props.match.params.id, patients)
+      .then(res => console.log(res.data));
 
     this.props.history.push('/');
   }
@@ -139,8 +161,9 @@ class UpdateExam extends Component {
             <h1>Patient Info</h1>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Patient Id:</Form.Label>
-              <Form.Control
+              <input
                 type="text"
+                className="form-control"
                 value={this.state.patientId}
                 onChange={this.onChangePatientId}
               />
@@ -148,8 +171,9 @@ class UpdateExam extends Component {
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Age:</Form.Label>
-              <Form.Control
+              <input
                 type="number"
+                className="form-control"
                 value={this.state.age}
                 onChange={this.onChangePatientAge}
               />
@@ -157,13 +181,19 @@ class UpdateExam extends Component {
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Sex:</Form.Label>
-              <Form.Control type="text" value={this.state.sex} onChange={this.onChangePatientSex} />
+              <input
+                type="text"
+                className="form-control"
+                value={this.state.sex}
+                onChange={this.onChangePatientSex}
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>BMI:</Form.Label>
-              <Form.Control
+              <input
                 type="number"
+                className="form-control"
                 value={this.state.bmi}
                 onChange={this.onChangePatientBmi}
               />
@@ -171,8 +201,9 @@ class UpdateExam extends Component {
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Zipcode:</Form.Label>
-              <Form.Control
+              <input
                 type="Number"
+                className="form-control"
                 value={this.state.zipcode}
                 onChange={this.onChangePatientZipcode}
               />
@@ -182,13 +213,19 @@ class UpdateExam extends Component {
             <h1>Exam Info</h1>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Exam Id:</Form.Label>
-              <Form.Control type="text" value={this.state.examId} onChange={this.onChangeExamId} />
+              <input
+                type="text"
+                className="form-control"
+                value={this.state.examId}
+                onChange={this.onChangeExamId}
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Img URL:</Form.Label>
-              <Form.Control
+              <input
                 type="text"
+                className="form-control"
                 value={this.state.imageUrl}
                 onChange={this.onChangeImageUrl}
               />
@@ -196,12 +233,13 @@ class UpdateExam extends Component {
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Date:</Form.Label>
-              <Form.Control type="text" />
+              <input type="text" className="form-control" />
             </Form.Group>
 
             <Form.Label>Key Findings:</Form.Label>
             <FloatingLabel controlId="floatingTextarea2" label="Key Findings">
-              <Form.Control
+              <input
+                className="form-control"
                 as="textarea"
                 placeholder="Write key findings here"
                 style={{ height: '100px' }}
@@ -212,8 +250,9 @@ class UpdateExam extends Component {
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Brixia Scores:</Form.Label>
-              <Form.Control
+              <input
                 type="text"
+                className="form-control"
                 value={this.state.brixiaScores}
                 onChange={this.onChangeBrixiaScores}
               />
