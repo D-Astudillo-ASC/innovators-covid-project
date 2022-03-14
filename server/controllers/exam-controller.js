@@ -14,7 +14,6 @@ getExams = async (req, res) => {
       let idx = 0;
       values.forEach(value => {
         let patientObj = value[0];
-        console.log(patientObj)
         let curExam = exams[idx]['_doc'];
         Object.assign(curExam, {
           age: patientObj['_doc']['AGE'],
